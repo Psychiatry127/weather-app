@@ -7,7 +7,9 @@ let suggestionsData = [];
 let activeIndex = -1;
 let timeInterval = null;
 
-// ---------------- THEME ----------------
+/* =========================
+   THEME TOGGLE
+========================= */
 const themeBtn = document.getElementById("themeToggle");
 
 themeBtn.addEventListener("click", () => {
@@ -18,7 +20,9 @@ themeBtn.addEventListener("click", () => {
     : "🌙";
 });
 
-// ---------------- INPUT EVENTS ----------------
+/* =========================
+   SEARCH INPUT
+========================= */
 input.addEventListener("input", handleSearch);
 
 input.addEventListener("keydown", (e) => {
@@ -41,7 +45,9 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
-// ---------------- SEARCH ----------------
+/* =========================
+   CITY SEARCH
+========================= */
 async function handleSearch() {
   const value = input.value;
 
@@ -62,7 +68,6 @@ async function handleSearch() {
   renderSuggestions();
 }
 
-// ---------------- SUGGESTIONS ----------------
 function renderSuggestions() {
   suggestionsBox.innerHTML = "";
 
@@ -94,7 +99,9 @@ function selectCity(city) {
   getWeather(city);
 }
 
-// ---------------- WEATHER ----------------
+/* =========================
+   WEATHER FETCH
+========================= */
 async function getWeather(cityObj) {
 
   const loading = document.getElementById("loading");
@@ -131,7 +138,7 @@ async function getWeather(cityObj) {
 
     const air = airData.list[0].components;
 
-    // UI
+    /* UI */
     document.getElementById("city").innerText =
       `${data.name}, ${data.sys.country}`;
 
@@ -171,7 +178,7 @@ async function getWeather(cityObj) {
     document.getElementById("sunset").innerText =
       new Date(data.sys.sunset * 1000).toLocaleTimeString();
 
-    // AIR
+    /* AIR */
     document.getElementById("aqi").innerText = air.pm2_5;
     document.getElementById("pm10").innerText = air.pm10;
     document.getElementById("co").innerText = air.co;
@@ -181,7 +188,7 @@ async function getWeather(cityObj) {
     document.getElementById("icon").src =
       `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
-    // TIME SYSTEM
+    /* TIME */
     function updateTime() {
       const utc =
         new Date().getTime() +
@@ -220,23 +227,62 @@ async function getWeather(cityObj) {
   loading.classList.add("hidden");
 }
 
-// ---------------- USER LOCATION WEATHER ----------------
+/* =========================
+   LOCATION FIXED VERSION
+========================= */
 function getUserLocationWeather() {
   if (!navigator.geolocation) {
     alert("Geolocation not supported");
     return;
   }
 
-  navigator.geolocation.getCurrentPosition(async (pos) => {
-    const lat = pos.coords.latitude;
-    const lon = pos.coords.longitude;
+  const loading = document.getElementById("loading");
+  const error = document.getElementById("error");
+  const weatherData = document.getElementById("weather-data");
+  const result = document.getElementById("result");
 
-    const url =
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+  loading.classList.remove("hidden");
+  error.classList.add("hidden");
+  weatherData.classList.add("hidden");
+  result.classList.add("hidden");
 
-    const res = await fetch(url);
-    const data = await res.json();
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      try {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
 
-    getWeather({ name: data.name });
-  });
+        const url =
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok) throw new Error();
+
+        getWeather({ name: data.name });
+
+      } catch (err) {
+        error.innerText = "Unable to fetch location weather";
+        error.classList.remove("hidden");
+      } finally {
+        loading.classList.add("hidden");
+      }
+    },
+    (err) => {
+      loading.classList.add("hidden");
+
+      error.innerText =
+        err.code === 1
+          ? "Location permission denied"
+          : "Location unavailable";
+
+      error.classList.remove("hidden");
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0
+    }
+  );
 }
