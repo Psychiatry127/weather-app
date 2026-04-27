@@ -54,23 +54,39 @@ body {
 }
 
 /* =========================
-   LOCATION BUTTON (FIXED)
+   LOCATION BUTTON
 ========================= */
 .location-btn {
   margin-top: 10px;
   padding: 10px 12px;
   width: 80%;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  background: var(--card);
+
+  /* FIX: use explicit color instead of variable dependency */
+  background: rgba(255, 255, 255, 0.08);
   color: var(--text);
+
   font-size: 14px;
-  transition: 0.2s;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+
+  /* more stable shadow across environments */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  backdrop-filter: blur(6px);
 }
 
 .location-btn:hover {
-  background: var(--accent);
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.location-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* =========================
