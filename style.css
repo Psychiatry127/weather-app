@@ -54,6 +54,26 @@ body {
 }
 
 /* =========================
+   LOCATION BUTTON (FIXED)
+========================= */
+.location-btn {
+  margin-top: 10px;
+  padding: 10px 12px;
+  width: 80%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.location-btn:hover {
+  background: var(--accent);
+}
+
+/* =========================
    LEFT PANEL
 ========================= */
 .sidebar {
@@ -178,7 +198,6 @@ body {
     padding: 16px;
   }
 
-  /* Prevent overflow issues */
   body {
     overflow-x: hidden;
   }
@@ -187,13 +206,11 @@ body {
     width: 100%;
   }
 
-  /* Make sections breathe more */
   .section {
     margin-bottom: 14px;
     padding: 14px;
   }
 
-  /* IMPORTANT FIX: force proper wrapping */
   .grid {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -206,7 +223,6 @@ body {
     line-height: 1.4;
   }
 
-  /* Bigger, cleaner main info */
   .main-temp {
     font-size: 44px;
   }
@@ -219,23 +235,11 @@ body {
     font-size: 18px;
   }
 
-  /* Bigger icon but contained */
   .weather-icon {
     width: 100px;
     height: 100px;
   }
 
-  /* Center content better */
-  .sidebar {
-    text-align: center;
-  }
-
-  /* Suggestions dropdown fix */
-  .suggestions {
-    max-height: 140px;
-  }
-
-  /* Theme button safe area */
   .theme-btn {
     top: 10px;
     right: 10px;
