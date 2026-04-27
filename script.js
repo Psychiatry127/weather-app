@@ -100,7 +100,7 @@ function selectCity(city) {
 }
 
 /* =========================
-   WEATHER FETCH
+   WEATHER + FORECAST
 ========================= */
 async function getWeather(cityObj) {
 
@@ -110,15 +110,19 @@ async function getWeather(cityObj) {
   const weatherData = document.getElementById("weather-data");
   const result = document.getElementById("result");
 
+  const forecastBox = document.getElementById("forecast");
+
   error.classList.add("hidden");
   weatherData.classList.add("hidden");
   result.classList.add("hidden");
+  forecastBox.innerHTML = "";
 
   loading.classList.remove("hidden");
 
   try {
     const name = typeof cityObj === "string" ? cityObj : cityObj.name;
 
+    /* CURRENT WEATHER */
     const url =
       `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${API_KEY}&units=metric`;
 
@@ -130,13 +134,22 @@ async function getWeather(cityObj) {
     const lat = data.coord.lat;
     const lon = data.coord.lon;
 
+    updateRadar(lat, lon);
+
+    /* AIR QUALITY */
     const airUrl =
       `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
     const airRes = await fetch(airUrl);
     const airData = await airRes.json();
-
     const air = airData.list[0].components;
+
+    /* FORECAST */
+    const forecastUrl =
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+
+    const forecastRes = await fetch(forecastUrl);
+    const forecastData = await forecastRes.json();
 
     /* UI */
     document.getElementById("city").innerText =
@@ -184,9 +197,10 @@ async function getWeather(cityObj) {
     document.getElementById("co").innerText = air.co;
     document.getElementById("no2").innerText = air.no2;
 
-    const icon = data.weather[0].icon;
     document.getElementById("icon").src =
-      `https://openweathermap.org/img/wn/${icon}@2x.png`;
+      `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+    renderForecast(forecastData);
 
     /* TIME */
     function updateTime() {
@@ -216,8 +230,8 @@ async function getWeather(cityObj) {
       timeInterval = setInterval(updateTime, 60000);
     }, msUntilNextMinute);
 
+    document.getElementById("weather-data").classList.remove("hidden");
     result.classList.remove("hidden");
-    weatherData.classList.remove("hidden");
 
   } catch (err) {
     error.innerText = "City not found or API error";
@@ -228,7 +242,45 @@ async function getWeather(cityObj) {
 }
 
 /* =========================
-   LOCATION FIXED VERSION
+   FORECAST
+========================= */
+function renderForecast(forecast) {
+
+  const box = document.getElementById("forecast");
+  box.innerHTML = "";
+
+  const daily = {};
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  forecast.list.forEach(i => {
+    const date = i.dt_txt.split(" ")[0];
+
+    if (!daily[date] && i.dt_txt.includes("12:00:00")) {
+      daily[date] = i;
+    }
+  });
+
+  Object.values(daily).slice(0, 5).forEach(d => {
+
+    const day = days[new Date(d.dt * 1000).getDay()];
+
+    const div = document.createElement("div");
+    div.className = "forecast-item";
+
+    div.innerHTML = `
+      <div>${day}</div>
+      <img class="forecast-icon" 
+        src="https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png"/>
+      <div>${d.main.temp.toFixed(1)}°C</div>
+      <div>${d.weather[0].main}</div>
+    `;
+
+    box.appendChild(div);
+  });
+}
+
+/* =========================
+   USER LOCATION
 ========================= */
 function getUserLocationWeather() {
   if (!navigator.geolocation) {
@@ -236,53 +288,36 @@ function getUserLocationWeather() {
     return;
   }
 
-  const loading = document.getElementById("loading");
-  const error = document.getElementById("error");
-  const weatherData = document.getElementById("weather-data");
-  const result = document.getElementById("result");
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
 
-  loading.classList.remove("hidden");
-  error.classList.add("hidden");
-  weatherData.classList.add("hidden");
-  result.classList.add("hidden");
+    const url =
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
-  navigator.geolocation.getCurrentPosition(
-    async (pos) => {
-      try {
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
+    const res = await fetch(url);
+    const data = await res.json();
 
-        const url =
-          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+    getWeather({ name: data.name });
+  });
+}
 
-        const res = await fetch(url);
-        const data = await res.json();
+/* =========================
+   RADAR
+========================= */
+function updateRadar(lat, lon) {
+  const frame = document.getElementById("radar-frame");
 
-        if (!res.ok) throw new Error();
+  frame.src = "about:blank";
 
-        getWeather({ name: data.name });
-
-      } catch (err) {
-        error.innerText = "Unable to fetch location weather";
-        error.classList.remove("hidden");
-      } finally {
-        loading.classList.add("hidden");
-      }
-    },
-    (err) => {
-      loading.classList.add("hidden");
-
-      error.innerText =
-        err.code === 1
-          ? "Location permission denied"
-          : "Location unavailable";
-
-      error.classList.remove("hidden");
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 0
-    }
-  );
+  setTimeout(() => {
+    frame.src =
+      `https://embed.windy.com/embed2.html` +
+      `?lat=${lat}` +
+      `&lon=${lon}` +
+      `&zoom=6` +
+      `&overlay=temp` +
+      `&product=ecmwf` +
+      `&level=surface`;
+  }, 150);
 }
