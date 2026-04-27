@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Forecast</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌤️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- THEME TOGGLE BUTTON -->
+  <button id="themeToggle" class="theme-btn">🌙</button>
+
+  <!-- LEFT PANEL -->
+  <div class="sidebar">
+
+    <h1>Weather Forecast</h1>
+
+    <div class="search-wrapper">
+      <input id="cityInput" placeholder="Search city..." />
+    </div>
+
+    <!-- LOCATION BUTTON -->
+    <button class="location-btn" onclick="getUserLocationWeather()">
+      📍 Use My Location
+    </button>
+
+    <div id="suggestions" class="suggestions"></div>
+
+    <div id="loading" class="hidden">Loading...</div>
+    <div id="error" class="hidden error"></div>
+
+    <div id="result" class="hidden">
+
+      <h2 id="city"></h2>
+
+      <div class="time-big">🕒 <span id="localTime"></span></div>
+
+      <img id="icon" class="weather-icon">
+
+      <p id="desc" class="desc-big"></p>
+
+      <p id="temp" class="main-temp"></p>
+
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="content" id="content">
+
+    <div id="weather-data" class="hidden">
+
+      <div class="section compact">
+        <h3>🌡 Temperature</h3>
+        <div class="grid">
+          <div>Feels: <span id="feels"></span>°C</div>
+          <div>Min: <span id="min"></span>°C</div>
+          <div>Max: <span id="max"></span>°C</div>
+        </div>
+      </div>
+
+      <div class="section compact">
+        <h3>🌍 Atmospheric Conditions</h3>
+        <div class="grid">
+          <div>💧 Humidity: <span id="humidity"></span>%</div>
+          <div>🔵 Pressure: <span id="pressure"></span> hPa</div>
+          <div>👁 Visibility: <span id="visibility"></span> m</div>
+        </div>
+      </div>
+
+      <div class="section compact">
+        <h3>🌬 Air Conditions</h3>
+        <div class="grid">
+          <div>Wind: <span id="wind"></span> m/s</div>
+          <div>Clouds: <span id="clouds"></span>%</div>
+        </div>
+      </div>
+
+      <div class="section compact">
+        <h3>🌅 Sun</h3>
+        <div class="grid">
+          <div>Rise: <span id="sunrise"></span></div>
+          <div>Set: <span id="sunset"></span></div>
+        </div>
+      </div>
+
+      <div class="section compact">
+        <h3>🫁 Air Quality</h3>
+        <div class="grid">
+          <div>PM2.5: <span id="aqi"></span></div>
+          <div>PM10: <span id="pm10"></span></div>
+          <div>CO: <span id="co"></span></div>
+          <div>NO₂: <span id="no2"></span></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

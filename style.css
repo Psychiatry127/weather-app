@@ -1,0 +1,196 @@
+/* =========================
+   THEME VARIABLES
+========================= */
+:root {
+  --bg: #0f0f1a;
+  --panel: rgba(255,255,255,0.05);
+  --card: rgba(255,255,255,0.05);
+  --text: #ffffff;
+  --accent: #444;
+}
+
+/* LIGHT MODE */
+body.light {
+  --bg: #f5f5f5;
+  --panel: #ffffff;
+  --card: #e9e9e9;
+  --text: #111;
+  --accent: #cccccc;
+}
+
+/* =========================
+   BASE LAYOUT
+========================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* =========================
+   THEME BUTTON
+========================= */
+.theme-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--text);
+}
+
+/* =========================
+   LEFT PANEL
+========================= */
+.sidebar {
+  width: 30%;
+  padding: 25px;
+  background: var(--panel);
+  text-align: center;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.search-wrapper input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  text-align: center;
+}
+
+/* =========================
+   SUGGESTIONS DROPDOWN
+========================= */
+.suggestions {
+  background: var(--panel);
+  max-height: 160px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background: var(--accent);
+}
+
+/* ACTIVE ITEM FIX */
+.suggestion.active {
+  background: var(--accent);
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+.content {
+  width: 70%;
+  padding: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* main data wrapper */
+#weather-data {
+  width: 95%;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.section {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: var(--card);
+  border-radius: 8px;
+}
+
+/* compact layout */
+.compact {
+  padding: 8px;
+}
+
+/* =========================
+   GRID SYSTEM
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  font-size: 13px;
+}
+
+/* =========================
+   WEATHER VISUALS
+========================= */
+.weather-icon {
+  width: 90px;
+  height: 90px;
+}
+
+.main-temp {
+  font-size: 36px;
+  margin: 5px 0;
+}
+
+/* DESCRIPTION */
+.desc-big {
+  font-size: 20px;
+  margin: 8px 0;
+  opacity: 0.9;
+}
+
+/* TIME */
+.time-big {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+/* =========================
+   UTILITIES
+========================= */
+.hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+}
+
+/* LOCATION BUTTON */
+.location-btn {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--text);
+}
+
+.location-btn:hover {
+  background: var(--accent);
+} 
