@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <!-- Important for mobile scaling -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Weather Forecast</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌤️</text></svg>">
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -25,6 +23,11 @@
     <div class="search-wrapper">
       <input id="cityInput" placeholder="Search city..." />
     </div>
+
+    <!-- LOCATION BUTTON -->
+    <button class="location-btn" onclick="getUserLocationWeather()">
+      📍 Use My Location
+    </button>
 
     <div id="suggestions" class="suggestions"></div>
 
@@ -52,7 +55,7 @@
     <div id="weather-data" class="hidden">
 
       <div class="section compact">
-        <h3>Temperature</h3>
+        <h3>🌡 Temperature</h3>
         <div class="grid">
           <div>Feels: <span id="feels"></span>°C</div>
           <div>Min: <span id="min"></span>°C</div>
@@ -61,16 +64,16 @@
       </div>
 
       <div class="section compact">
-        <h3>Atmospheric Conditions</h3>
+        <h3>🌍 Atmospheric Conditions</h3>
         <div class="grid">
-          <div>Humidity: <span id="humidity"></span>%</div>
-          <div>Pressure: <span id="pressure"></span> hPa</div>
-          <div>Visibility: <span id="visibility"></span> m</div>
+          <div>💧 Humidity: <span id="humidity"></span>%</div>
+          <div>🔵 Pressure: <span id="pressure"></span> hPa</div>
+          <div>👁 Visibility: <span id="visibility"></span> m</div>
         </div>
       </div>
 
       <div class="section compact">
-        <h3>Air Conditions</h3>
+        <h3>🌬 Air Conditions</h3>
         <div class="grid">
           <div>Wind: <span id="wind"></span> m/s</div>
           <div>Clouds: <span id="clouds"></span>%</div>
@@ -78,15 +81,15 @@
       </div>
 
       <div class="section compact">
-        <h3>Sun</h3>
+        <h3>🌅 Sun</h3>
         <div class="grid">
-          <div>Sunrise: <span id="sunrise"></span></div>
-          <div>Sunset: <span id="sunset"></span></div>
+          <div>Rise: <span id="sunrise"></span></div>
+          <div>Set: <span id="sunset"></span></div>
         </div>
       </div>
 
       <div class="section compact">
-        <h3>Air Quality</h3>
+        <h3>🫁 Air Quality</h3>
         <div class="grid">
           <div>PM2.5: <span id="aqi"></span></div>
           <div>PM10: <span id="pm10"></span></div>
