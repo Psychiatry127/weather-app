@@ -1,10 +1,7 @@
-/* =========================
-   THEME VARIABLES
-========================= */
 :root {
   --bg: #0f0f1a;
-  --panel: rgba(255,255,255,0.05);
-  --card: rgba(255,255,255,0.05);
+  --panel: rgba(255, 255, 255, 0.05);
+  --card: rgba(255, 255, 255, 0.05);
   --text: #ffffff;
   --accent: #444;
 }
@@ -17,9 +14,6 @@ body.light {
   --accent: #cccccc;
 }
 
-/* =========================
-   BASE
-========================= */
 * {
   box-sizing: border-box;
 }
@@ -37,56 +31,17 @@ body {
   height: 100vh;
 }
 
-/* =========================
-   THEME BUTTON
-========================= */
+/* theme */
 .theme-btn {
   position: absolute;
   top: 15px;
-  right: 15px;
-  font-size: 20px;
+  right: 25px;
   padding: 8px 12px;
-  border: none;
   border-radius: 8px;
-  cursor: pointer;
+  border: none;
   background: var(--panel);
   color: var(--text);
-}
-
-/* =========================
-   LOCATION BUTTON
-========================= */
-.location-btn {
-  margin-top: 10px;
-  padding: 10px 12px;
-  width: 80%;
-  border: none;
-  border-radius: 10px;
   cursor: pointer;
-
-  /* FIX: use explicit color instead of variable dependency */
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text);
-
-  font-size: 14px;
-  font-weight: 500;
-
-  transition: all 0.2s ease;
-
-  /* more stable shadow across environments */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-
-  backdrop-filter: blur(6px);
-}
-
-.location-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-}
-
-.location-btn:active {
-  transform: translateY(0px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* =========================
@@ -115,16 +70,25 @@ body {
   font-size: 16px;
 }
 
-/* =========================
-   SUGGESTIONS
-========================= */
+/* location button FIX */
+.location-btn {
+  margin-top: 10px;
+  padding: 10px;
+  width: 80%;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: var(--card);
+  color: var(--text);
+}
+
+/* suggestions */
 .suggestions {
   background: var(--panel);
-  max-height: 160px;
-  overflow-y: auto;
   margin-top: 10px;
   border-radius: 6px;
-  text-align: left;
+  max-height: 160px;
+  overflow-y: auto;
 }
 
 .suggestion {
@@ -137,15 +101,14 @@ body {
   background: var(--accent);
 }
 
-/* =========================
-   RIGHT PANEL
-========================= */
+/* right */
 .content {
   width: 70%;
-  padding: 50px;
+  padding: 40px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  overflow-y: auto;
 }
 
 #weather-data {
@@ -165,31 +128,48 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 6px;
-  font-size: 13px;
 }
 
 /* visuals */
 .weather-icon {
   width: 90px;
-  height: 90px;
 }
 
 .main-temp {
   font-size: 36px;
 }
 
-.desc-big {
-  font-size: 20px;
-}
-
+.desc-big,
 .time-big {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
 }
 
 /* =========================
-   UTILITIES
+   FORECAST SECTION
 ========================= */
+.forecast {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.forecast-item {
+  min-width: 120px;
+  background: var(--card);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.forecast-icon {
+  width: 50px;
+  height: 50px;
+}
+
+/* utilities */
 .hidden {
   display: none;
 }
@@ -198,11 +178,8 @@ body {
   color: red;
 }
 
-/* =========================
-   MOBILE VERSION
-========================= */
+/* mobile */
 @media (max-width: 768px) {
-
   .app {
     flex-direction: column;
     height: auto;
@@ -211,53 +188,17 @@ body {
   .sidebar,
   .content {
     width: 100%;
-    padding: 16px;
-  }
-
-  body {
-    overflow-x: hidden;
-  }
-
-  #weather-data {
-    width: 100%;
-  }
-
-  .section {
-    margin-bottom: 14px;
-    padding: 14px;
   }
 
   .grid {
     grid-template-columns: 1fr;
-    gap: 10px;
-    font-size: 14px;
   }
 
-  .grid div {
-    word-break: break-word;
-    overflow-wrap: anywhere;
-    line-height: 1.4;
+  .forecast-container {
+    flex-wrap: nowrap;
   }
+}
 
-  .main-temp {
-    font-size: 44px;
-  }
-
-  .desc-big {
-    font-size: 18px;
-  }
-
-  .time-big {
-    font-size: 18px;
-  }
-
-  .weather-icon {
-    width: 100px;
-    height: 100px;
-  }
-
-  .theme-btn {
-    top: 10px;
-    right: 10px;
-  }
+#radar-frame {
+  transition: opacity 0.3s ease;
 }
