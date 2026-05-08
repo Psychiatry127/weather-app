@@ -1,8 +1,16 @@
 # Weather App
 
+## Live Demo
+
+🌐 https://psychiatry127.github.io/weather-app/
+
+---
+
 ## Description
 
-A simple and modern weather app that lets you search any city and see live weather, air quality, and local time in a clean interface.
+A simple and modern weather application that allows users to search for any city and view real-time weather conditions, air quality information, and local time through a clean and responsive interface.
+
+🔗 Live Demo: https://psychiatry127.github.io/weather-app/
 
 ---
 
@@ -51,4 +59,4 @@ This project is intended for personal and educational use. The MIT License is re
 
 ## Author
 
-This project was built as a frontend practice project focused on API integration, UI design, and real-time data handling.
+This project was built as a frontend practice project focused on API integration, responsive UI design, and real-time API data handling.
