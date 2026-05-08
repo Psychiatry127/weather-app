@@ -10,8 +10,6 @@
 
 A simple and modern weather application that allows users to search for any city and view real-time weather conditions, air quality information, and local time through a clean and responsive interface.
 
-🔗 Live Demo: https://psychiatry127.github.io/weather-app/
-
 ---
 
 ## Features
